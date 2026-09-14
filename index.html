@@ -9,7 +9,7 @@
             --primary-color: #1b365d;
             --accent-gold: #e6bf41;
             --text-dark: #333333;
-            --card-bg: rgba(255, 255, 255, 0.93);
+            --card-bg: rgba(255, 255, 255, 0.95);
         }
 
         /* --- Animated Moving Cloud Background --- */
@@ -18,26 +18,27 @@
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             color: var(--text-dark);
-            line-height: 1.6;
+            line-height: 1.7;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #aaccf2;
+            background-color: #87CEEB; /* Bright sky blue fallback */
             overflow-x: hidden;
         }
 
-        /* Moving background layer */
         .sky-background {
             position: fixed;
             top: 0;
             left: 0;
-            width: 200%;
+            width: 300%;
             height: 100%;
-            background-image: url('https://replicate.delivery/xpbkg/X5Nqf7Yn0V0gN1u8N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7/output.png');
+            /* Reliable continuous cloud texture pattern */
+            background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2000&auto=format&fit=crop');
             background-repeat: repeat-x;
             background-size: cover;
             z-index: -1;
-            animation: driftClouds 120s linear infinite;
+            opacity: 0.85;
+            animation: driftClouds 90s linear infinite;
         }
 
         @keyframes driftClouds {
@@ -45,47 +46,42 @@
             to { transform: translateX(-50%); }
         }
 
-        /* --- Header & Navigation --- */
+        /* --- Header --- */
         .header-bar {
-            background-color: rgba(27, 54, 93, 0.9);
+            background-color: rgba(27, 54, 93, 0.92);
             color: white;
-            padding: 15px 30px;
+            padding: 18px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             backdrop-filter: blur(5px);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 15px rgba(0,0,0,0.25);
             position: sticky;
             top: 0;
             z-index: 1000;
         }
 
         .logo {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: white;
             text-decoration: none;
         }
 
-        .logo span {
-            color: var(--accent-gold);
-        }
+        .logo span { color: var(--accent-gold); }
 
         nav a {
             color: #e0e0e0;
             text-decoration: none;
-            margin-left: 25px;
-            font-size: 0.95rem;
+            margin-left: 30px;
+            font-size: 1rem;
             font-weight: 500;
         }
+        nav a:hover { color: white; }
 
-        nav a:hover {
-            color: white;
-        }
-
-        /* --- Main Content Layout --- */
+        /* --- Main Layout --- */
         .main-container {
-            max-width: 960px;
+            max-width: 980px;
             margin: 40px auto;
             padding: 0 20px;
             flex: 1;
@@ -95,162 +91,217 @@
 
         .content-card {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            padding: 45px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             margin-bottom: 40px;
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.9);
         }
 
-        h1, h2 {
-            color: var(--primary-color);
-            margin-top: 0;
-        }
-
-        h2.section-title {
-            text-align: center;
-            color: white;
-            font-size: 1.8rem;
-            margin-top: 60px;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-        }
+        h1, h2 { color: var(--primary-color); margin-top: 0; letter-spacing: -0.5px; }
 
         .date-tag {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             color: #1c5691;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .verse-box {
-            border-left: 4px solid var(--accent-gold);
-            padding: 20px;
-            margin: 25px 0;
-            background-color: rgba(255,255,255,0.6);
-            border-radius: 0 8px 8px 0;
-        }
-
-        .verse-text {
-            font-size: 1.3rem;
-            font-style: italic;
-            color: #1a1a1a;
+            font-weight: 700;
             margin-bottom: 10px;
         }
 
-        .verse-reference {
-            font-weight: 700;
-            color: #555555;
-            text-align: right;
-            font-size: 1.1rem;
+        .section-title {
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            text-shadow: 0 3px 6px rgba(0,0,0,0.6);
         }
 
-        /* --- Read Aloud Button Style --- */
-        .speak-btn {
+        .verse-box {
+            border-left: 5px solid var(--accent-gold);
+            padding: 25px;
+            margin: 30px 0;
+            background-color: rgba(255,255,255,0.7);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .verse-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .verse-reference {
+            font-weight: 800;
+            color: #555555;
+            text-align: right;
+            font-size: 1.2rem;
+        }
+
+        .control-panel {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
             background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 8px 14px;
-            font-size: 0.85rem;
+            padding: 12px 24px;
+            font-size: 0.95rem;
             font-weight: 600;
-            border-radius: 20px;
+            border-radius: 30px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover { background-color: #2c4d80; transform: translateY(-2px); }
+
+        /* --- Alarm Section Styling --- */
+        .alarm-section {
+            background: linear-gradient(135deg, #1b365d 0%, #2c4d80 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 45px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        }
+
+        .alarm-section h2 { color: white; margin-bottom: 20px;}
+
+        .alarm-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .time-input-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        input[type="time"] {
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: transparent;
+            color: white;
+            font-size: 1.2rem;
+            font-family: inherit;
+        }
+        
+        select#alarm-verse-select {
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: #ffffff;
+            color: var(--text-dark);
+            font-size: 1rem;
+            width: 100%;
+            max-width: 450px;
+            cursor: pointer;
+        }
+
+        .status-display {
+            font-weight: bold;
             margin-top: 10px;
-            transition: background-color 0.2s;
+            padding: 10px;
+            border-radius: 6px;
+            background: rgba(0,255,0,0.15);
+            display: none;
         }
 
-        .speak-btn:hover {
-            background-color: #2c4d80;
+        .status-active { display: inline-block; color: #9ae6b4; }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.8); }
+            70% { box-shadow: 0 0 0 20px rgba(255, 215, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
         }
-
-        .reflection-block h3 {
-            color: var(--primary-color);
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-
-        .reflection-block p {
-            margin-top: 0;
-            color: #444;
-        }
+        
+        .alarm-triggering { animation: pulse 2s infinite; }
 
         /* --- Popular Verses Grid --- */
         .verses-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
             padding-bottom: 60px;
         }
 
         .verse-card {
             background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-            border-top: 4px solid var(--primary-color);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-top: 6px solid var(--primary-color);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .grid-quote {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-style: italic;
             color: #222;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .grid-ref {
-            font-weight: 700;
+            font-weight: 800;
             color: #1c5691;
             text-align: right;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
         }
 
         footer {
-            background-color: rgba(15, 28, 47, 0.95);
+            background-color: rgba(15, 28, 47, 0.98);
             color: #bbb;
             text-align: center;
-            padding: 25px;
-            font-size: 0.9rem;
+            padding: 35px;
+            font-size: 0.95rem;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
-
-        footer strong {
-            color: var(--accent-gold);
-        }
+        footer strong { color: var(--accent-gold); }
 
         @media (max-width: 768px) {
             .header-bar { padding: 15px 20px; }
-            nav a { margin-left: 15px; }
-            .content-card { padding: 25px; }
+            nav a { margin-left: 15px; font-size: 0.9rem;}
+            .content-card, .alarm-section { padding: 25px; }
+            h1 { font-size: 2.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Animated Cloud Background Element -->
     <div class="sky-background"></div>
 
-    <!-- Header Navigation -->
     <header class="header-bar">
         <a href="#" class="logo">Obey<span>Him</span>.com</a>
         <nav>
             <a href="#daily-word">Daily Word</a>
+            <a href="#set-alarm">Wake-Up Call</a>
             <a href="#popular-verses">Popular Verses</a>
         </nav>
     </header>
 
-    <!-- Main Content Area -->
     <main class="main-container">
 
-        <!-- Daily Verse Section (Automated daily changes) -->
+        <!-- Daily Verse Section -->
         <section id="daily-word" class="content-card">
             <div class="date-tag" id="current-date">Loading Today's Date...</div>
             <h1>Daily Scripture & Reflection</h1>
@@ -258,12 +309,38 @@
             <div class="verse-box">
                 <div class="verse-text" id="daily-verse-text">Loading today's verse...</div>
                 <div class="verse-reference" id="daily-verse-ref">-</div>
-                <button class="speak-btn" onclick="speakText('daily-verse-text', 'daily-verse-ref')">🔊 Listen to Verse</button>
             </div>
 
-            <div class="reflection-block">
+            <div class="control-panel">
+                <button class="action-btn" onclick="speakTextFromElements('daily-verse-text', 'daily-verse-ref')">🔊 Listen to Today's Verse (Soft Male Voice)</button>
+            </div>
+
+            <div class="reflection-block" style="margin-top: 30px;">
                 <h3>Daily Spiritual Focus</h3>
                 <p id="daily-reflection-text">Loading today's thought...</p>
+            </div>
+        </section>
+
+        <!-- Wake-Up Call / Alarm Section -->
+        <section id="set-alarm" class="alarm-section" id="alarm-card-box">
+            <h2>☀️ Set Your Daily Wake-Up Call</h2>
+            <p>Set your local time, pick one of 15 inspiring scriptures, and the site will gently read it aloud when the clock hits your target time.</p>
+            
+            <div class="alarm-controls">
+                <div class="time-input-group">
+                    <label for="alarm-time">Wake-Up Time:</label>
+                    <input type="time" id="alarm-time" value="07:00">
+                    <button id="alarm-toggle-btn" class="action-btn" onclick="toggleAlarm()">Activate Alarm</button>
+                </div>
+                
+                <div>
+                    <label for="alarm-verse-select">Choose Your Wake-Up Scripture:</label><br>
+                    <select id="alarm-verse-select">
+                        <!-- Populated dynamically via JS -->
+                    </select>
+                </div>
+
+                <div id="alarm-status" class="status-display">Alarm is active for <span id="alarm-time-display"></span></div>
             </div>
         </section>
 
@@ -271,65 +348,83 @@
         <h2 id="popular-verses" class="section-title">Pillars of Faith: Popular Bible Verses</h2>
 
         <div class="verses-grid">
-            <!-- Verse 1 -->
             <div class="verse-card">
                 <div>
                     <div class="grid-quote" id="q1">"For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."</div>
                     <div class="grid-ref" id="r1">— John 3:16</div>
                 </div>
-                <button class="speak-btn" onclick="speakText('q1', 'r1')">🔊 Listen</button>
+                <button class="action-btn" style="font-size: 0.85rem; padding: 8px 16px;" onclick="speakTextFromElements('q1', 'r1')">🔊 Listen</button>
             </div>
-            <!-- Verse 2 -->
+
             <div class="verse-card">
                 <div>
                     <div class="grid-quote" id="q2">"Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge him, and he will make straight your paths."</div>
                     <div class="grid-ref" id="r2">— Proverbs 3:5-6</div>
                 </div>
-                <button class="speak-btn" onclick="speakText('q2', 'r2')">🔊 Listen</button>
+                <button class="action-btn" style="font-size: 0.85rem; padding: 8px 16px;" onclick="speakTextFromElements('q2', 'r2')">🔊 Listen</button>
             </div>
-            <!-- Verse 3 -->
+
             <div class="verse-card">
                 <div>
                     <div class="grid-quote" id="q3">"I can do all things through him who strengthens me."</div>
                     <div class="grid-ref" id="r3">— Philippians 4:13</div>
                 </div>
-                <button class="speak-btn" onclick="speakText('q3', 'r3')">🔊 Listen</button>
+                <button class="action-btn" style="font-size: 0.85rem; padding: 8px 16px;" onclick="speakTextFromElements('q3', 'r3')">🔊 Listen</button>
             </div>
-            <!-- Verse 4 -->
+
             <div class="verse-card">
                 <div>
                     <div class="grid-quote" id="q4">"Your word is a lamp to my feet and a light to my path."</div>
                     <div class="grid-ref" id="r4">— Psalm 119:105</div>
                 </div>
-                <button class="speak-btn" onclick="speakText('q4', 'r4')">🔊 Listen</button>
+                <button class="action-btn" style="font-size: 0.85rem; padding: 8px 16px;" onclick="speakTextFromElements('q4', 'r4')">🔊 Listen</button>
             </div>
-            <!-- Verse 5 -->
+
             <div class="verse-card">
                 <div>
                     <div class="grid-quote" id="q5">"And we know that for those who love God all things work together for good, for those who are called according to his purpose."</div>
                     <div class="grid-ref" id="r5">— Romans 8:28</div>
                 </div>
-                <button class="speak-btn" onclick="speakText('q5', 'r5')">🔊 Listen</button>
+                <button class="action-btn" style="font-size: 0.85rem; padding: 8px 16px;" onclick="speakTextFromElements('q5', 'r5')">🔊 Listen</button>
             </div>
-            <!-- Verse 6 -->
+
             <div class="verse-card">
                 <div>
                     <div class="grid-quote" id="q6">"Be strong and courageous. Do not be frightened, and do not be dismayed, for the Lord your God is with you wherever you go."</div>
                     <div class="grid-ref" id="r6">— Joshua 1:9</div>
                 </div>
-                <button class="speak-btn" onclick="speakText('q6', 'r6')">🔊 Listen</button>
+                <button class="action-btn" style="font-size: 0.85rem; padding: 8px 16px;" onclick="speakTextFromElements('q6', 'r6')">🔊 Listen</button>
             </div>
         </div>
 
     </main>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2026 <strong>ObeyHim.com</strong>. Walk daily in His light, truth, and grace.</p>
     </footer>
 
-    <!-- JavaScript for Automation and Text-to-Speech -->
+    <!-- JavaScript Automation, Alarm, and Audio Engine -->
     <script>
+        // 15 Curated Alarm Verses
+        const alarmVersesList = [
+            { text: "This is the day that the Lord has made; let us rejoice and be glad in it.", ref: "Psalm 118:24" },
+            { text: "The steadfast love of the Lord never ceases; his mercies never come to an end; they are new every morning; great is your faithfulness.", ref: "Lamentations 3:22-23" },
+            { text: "Trust in the Lord with all your heart, and do not lean on your own understanding.", ref: "Proverbs 3:5" },
+            { text: "Your word is a lamp to my feet and a light to my path.", ref: "Psalm 119:105" },
+            { text: "I can do all things through him who strengthens me.", ref: "Philippians 4:13" },
+            { text: "Be strong and courageous. Do not be frightened, and do not be dismayed, for the Lord your God is with you wherever you go.", ref: "Joshua 1:9" },
+            { text: "The Lord is my light and my salvation; whom shall I fear?", ref: "Psalm 27:1" },
+            { text: "Commit your work to the Lord, and your plans will be established.", ref: "Proverbs 16:3" },
+            { text: "Let the morning bring me word of your unfailing love, for I have put my trust in you.", ref: "Psalm 143:8" },
+            { text: "Cast your cares on the Lord and he will sustain you; he will never let the righteous be shaken.", ref: "Psalm 55:22" },
+            { text: "Peace I leave with you; my peace I give to you. Not as the world gives do I give to you. Let not your hearts be troubled, neither let them be afraid.", ref: "John 14:27" },
+            { text: "The Lord is my shepherd; I shall not want.", ref: "Psalm 23:1" },
+            { text: "Seek the Lord and his strength; seek his presence continually!", ref: "1 Chronicles 16:11" },
+            { text: "Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you.", ref: "Isaiah 41:10" },
+            { text: "O Lord, in the morning you hear my voice; in the morning I prepare a sacrifice for you and watch.", ref: "Psalm 5:3" }
+        ];
+
+        // Daily rotating verses
         const dailyVersesDb = [
             { ref: "Psalm 119:105", text: "Your word is a lamp to my feet and a light to my path.", thought: "Let His truth guide your direction in every choice you make today." },
             { ref: "Proverbs 3:5", text: "Trust in the Lord with all your heart and lean not on your own understanding.", thought: "Surrendering your need to control brings true peace." },
@@ -338,62 +433,127 @@
             { ref: "Joshua 1:9", text: "Have I not commanded you? Be strong and courageous. Do not be frightened, and do not be dismayed, for the Lord your God is with you wherever you go.", thought: "Step out in faith knowing the Creator of the universe is by your side." }
         ];
 
+        // Populate Alarm Dropdown
+        const selectDropdown = document.getElementById('alarm-verse-select');
+        alarmVersesList.forEach((item, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = `${item.ref}: "${item.text.substring(0, 50)}..."`;
+            selectDropdown.appendChild(option);
+        });
+
+        // Initialize Daily Content
         function loadDailyContent() {
-            // 1. Set Today's Date Header (Changes automatically every day)
             const now = new Date();
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('current-date').innerText = now.toLocaleDateString('en-US', dateOptions);
 
-            // 2. Calculate Day of Year (1-365)
             const start = new Date(now.getFullYear(), 0, 0);
             const diff = (now - start) + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
-            const oneDay = 1000 * 60 * 60 * 24;
-            const dayOfYear = Math.floor(diff / oneDay);
+            const dayOfYear = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-            // 3. Select Verse based on Day of Year
             const verseIndex = (dayOfYear - 1) % dailyVersesDb.length;
             const todaysVerse = dailyVersesDb[verseIndex];
 
-            // 4. Inject content
             document.getElementById('daily-verse-text').innerText = `“${todaysVerse.text}”`;
             document.getElementById('daily-verse-ref').innerText = `— ${todaysVerse.ref}`;
             document.getElementById('daily-reflection-text').innerText = todaysVerse.thought;
         }
 
-        // Text-to-Speech function for soft, clear voice reading
-        function speakText(textElementId, refElementId) {
+        // Soft, Clear Male Voice Text-to-Speech Engine
+        function speakTextString(text, reference) {
             if (!('speechSynthesis' in window)) {
-                alert("Sorry, your browser does not support text-to-speech audio.");
+                alert("Speech synthesis is not supported on your browser.");
                 return;
             }
 
-            // Stop any ongoing speech
             window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(`${text} — ${reference}`);
+            
+            // Soft and clear voice pacing
+            utterance.rate = 0.85; 
+            utterance.pitch = 0.9;  
 
-            const textToRead = document.getElementById(textElementId).innerText;
-            const refToRead = document.getElementById(refElementId).innerText;
-            const utterance = new SpeechSynthesisUtterance(`${textToRead} ${refToRead}`);
-
-            // Configure speech settings for a calm, soft, clear delivery
-            utterance.rate = 0.9; // Slightly slower for peaceful readability
-            utterance.pitch = 0.95; // Natural, grounded tone
-
-            // Attempt to select a clear English voice (prefers male profiles if available on the device)
             const voices = window.speechSynthesis.getVoices();
-            const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Male') || v.name.includes('David') || v.name.includes('James') || v.name.includes('George')));
-            if (preferredVoice) {
-                utterance.voice = preferredVoice;
+            // Target clean English male voices
+            const maleVoice = voices.find(v => v.lang.includes('en') && (v.name.includes('David') || v.name.includes('Male') || v.name.includes('James') || v.name.includes('George') || v.name.includes('Oliver')));
+            if (maleVoice) {
+                utterance.voice = maleVoice;
             }
 
             window.speechSynthesis.speak(utterance);
         }
 
-        // Preload voices for speech synthesis
+        function speakTextFromElements(textId, refId) {
+            const text = document.getElementById(textId).innerText;
+            const ref = document.getElementById(refId).innerText;
+            speakTextString(text, ref);
+        }
+
+        // Alarm Logic
+        let alarmActive = false;
+        let targetAlarmTime = "";
+
+        function toggleAlarm() {
+            const timeInput = document.getElementById('alarm-time').value;
+            const btn = document.getElementById('alarm-toggle-btn');
+            const statusDisplay = document.getElementById('alarm-status');
+            const timeDisplay = document.getElementById('alarm-time-display');
+
+            if (!alarmActive) {
+                if (!timeInput) {
+                    alert("Please select a valid time for your alarm.");
+                    return;
+                }
+                targetAlarmTime = timeInput;
+                alarmActive = true;
+                btn.innerText = "Deactivate Alarm";
+                btn.style.backgroundColor = "#c53030";
+                timeDisplay.innerText = targetAlarmTime;
+                statusDisplay.style.display = "block";
+                statusDisplay.className = "status-display status-active";
+            } else {
+                alarmActive = false;
+                targetAlarmTime = "";
+                btn.innerText = "Activate Alarm";
+                btn.style.backgroundColor = "";
+                statusDisplay.style.display = "none";
+                document.getElementById('set-alarm').classList.remove('alarm-triggering');
+            }
+        }
+
+        // Check alarm every second
+        setInterval(() => {
+            if (!alarmActive) return;
+
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const currentTimeString = `${hours}:${minutes}`;
+
+            if (currentTimeString === targetAlarmTime) {
+                // Trigger alarm once per minute match
+                alarmActive = false; // Reset to prevent continuous looping during that minute
+                document.getElementById('alarm-toggle-btn').innerText = "Activate Alarm";
+                document.getElementById('alarm-toggle-btn').style.backgroundColor = "";
+                document.getElementById('alarm-status').style.display = "none";
+                
+                // Visual Pulse Effect
+                const alarmBox = document.getElementById('set-alarm');
+                alarmBox.classList.add('alarm-triggering');
+                setTimeout(() => alarmBox.classList.remove('alarm-triggering'), 15000);
+
+                // Speak selected alarm verse
+                const selectedIndex = document.getElementById('alarm-verse-select').value;
+                const chosenVerse = alarmVersesList[selectedIndex];
+                speakTextString(chosenVerse.text, chosenVerse.ref);
+            }
+        }, 1000);
+
         if ('speechSynthesis' in window) {
             window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
         }
 
-        // Run automation on page load
         loadDailyContent();
     </script>
 </body>
