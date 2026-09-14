@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ObeyHim.com — Daily Walk in His Word</title>
     <style>
-        /* --- CSS Variables for Theme --- */
         :root {
-            --primary-color: #1b365d; /* Deep Navy for headers/accents */
-            --accent-gold: #e6bf41; /* Soft Gold for highlights */
-            --text-dark: #333333;   /* Main text color */
-            --card-bg: rgba(255, 255, 255, 0.93); /* Semi-transparent white for readability */
-            --sky-blue: #aaccf2;    /* Base light blue background */
+            --primary-color: #1b365d;
+            --accent-gold: #e6bf41;
+            --text-dark: #333333;
+            --card-bg: rgba(255, 255, 255, 0.93);
         }
 
-        /* --- Animated Heaven Background --- */
+        /* --- Animated Moving Cloud Background --- */
         body {
             margin: 0;
             padding: 0;
@@ -24,41 +22,40 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-
-            /* The generated cloud background as a static base */
-            background-color: var(--sky-blue);
-            background-image: url('https://replicate.delivery/xpbkg/X5Nqf7Yn0V0gN1u8N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7/output.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed; /* Keeps clouds stationary while scrolling */
+            background-color: #aaccf2;
+            overflow-x: hidden;
         }
 
-        /* Optional: Add a subtle CSS overlay animation for a slight "drifting" effect */
-        body::before {
-            content: "";
+        /* Moving background layer */
+        .sky-background {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 200%;
             height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); /* Subtle texture overlay */
-            opacity: 0.03; /* Very faint */
-            pointer-events: none;
+            background-image: url('https://replicate.delivery/xpbkg/X5Nqf7Yn0V0gN1u8N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7/output.png');
+            background-repeat: repeat-x;
+            background-size: cover;
             z-index: -1;
+            animation: driftClouds 120s linear infinite;
+        }
+
+        @keyframes driftClouds {
+            from { transform: translateX(0); }
+            to { transform: translateX(-50%); }
         }
 
         /* --- Header & Navigation --- */
         .header-bar {
-            background-color: rgba(27, 54, 93, 0.9); /* Translucent navy */
+            background-color: rgba(27, 54, 93, 0.9);
             color: white;
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(5px); /* Frosted glass effect */
+            backdrop-filter: blur(5px);
             box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            position: sticky; /* Sticks to top on scroll */
+            position: sticky;
             top: 0;
             z-index: 1000;
         }
@@ -68,7 +65,6 @@
             font-weight: 700;
             color: white;
             text-decoration: none;
-            letter-spacing: 0.5px;
         }
 
         .logo span {
@@ -81,7 +77,6 @@
             margin-left: 25px;
             font-size: 0.95rem;
             font-weight: 500;
-            transition: color 0.3s ease;
         }
 
         nav a:hover {
@@ -93,24 +88,23 @@
             max-width: 960px;
             margin: 40px auto;
             padding: 0 20px;
-            flex: 1; /* Pushes footer down */
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        /* --- Universal Card Style --- */
         .content-card {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 40px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             margin-bottom: 40px;
             border: 1px solid rgba(255,255,255,0.8);
         }
 
-        /* --- Section Titles --- */
         h1, h2 {
             color: var(--primary-color);
             margin-top: 0;
-            letter-spacing: -0.5px;
         }
 
         h2.section-title {
@@ -119,10 +113,9 @@
             font-size: 1.8rem;
             margin-top: 60px;
             margin-bottom: 30px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
         }
 
-        /* --- Daily Verse Section --- */
         .date-tag {
             font-size: 0.85rem;
             text-transform: uppercase;
@@ -134,10 +127,9 @@
 
         .verse-box {
             border-left: 4px solid var(--accent-gold);
-            padding-left: 20px;
-            margin: 25px 0;
-            background-color: rgba(255,255,255,0.5);
             padding: 20px;
+            margin: 25px 0;
+            background-color: rgba(255,255,255,0.6);
             border-radius: 0 8px 8px 0;
         }
 
@@ -146,7 +138,6 @@
             font-style: italic;
             color: #1a1a1a;
             margin-bottom: 10px;
-            font-weight: 400;
         }
 
         .verse-reference {
@@ -154,6 +145,27 @@
             color: #555555;
             text-align: right;
             font-size: 1.1rem;
+        }
+
+        /* --- Read Aloud Button Style --- */
+        .speak-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 20px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+        }
+
+        .speak-btn:hover {
+            background-color: #2c4d80;
         }
 
         .reflection-block h3 {
@@ -167,7 +179,7 @@
             color: #444;
         }
 
-        /* --- Popular Verses Grid Section --- */
+        /* --- Popular Verses Grid --- */
         .verses-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -184,12 +196,6 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .verse-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
 
         .grid-quote {
@@ -204,9 +210,9 @@
             color: #1c5691;
             text-align: right;
             font-size: 0.9rem;
+            margin-bottom: 10px;
         }
 
-        /* --- Footer --- */
         footer {
             background-color: rgba(15, 28, 47, 0.95);
             color: #bbb;
@@ -220,18 +226,17 @@
             color: var(--accent-gold);
         }
 
-        /* --- Responsive Adjustments --- */
         @media (max-width: 768px) {
             .header-bar { padding: 15px 20px; }
-            nav a { margin-left: 15px; font-size: 0.9rem; }
-            .main-container { margin: 20px auto; }
+            nav a { margin-left: 15px; }
             .content-card { padding: 25px; }
-            h1 { font-size: 2rem; }
-            .verse-text { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Animated Cloud Background Element -->
+    <div class="sky-background"></div>
 
     <!-- Header Navigation -->
     <header class="header-bar">
@@ -245,7 +250,7 @@
     <!-- Main Content Area -->
     <main class="main-container">
 
-        <!-- Daily Verse Section (Automated) -->
+        <!-- Daily Verse Section (Automated daily changes) -->
         <section id="daily-word" class="content-card">
             <div class="date-tag" id="current-date">Loading Today's Date...</div>
             <h1>Daily Scripture & Reflection</h1>
@@ -253,6 +258,7 @@
             <div class="verse-box">
                 <div class="verse-text" id="daily-verse-text">Loading today's verse...</div>
                 <div class="verse-reference" id="daily-verse-ref">-</div>
+                <button class="speak-btn" onclick="speakText('daily-verse-text', 'daily-verse-ref')">🔊 Listen to Verse</button>
             </div>
 
             <div class="reflection-block">
@@ -267,33 +273,51 @@
         <div class="verses-grid">
             <!-- Verse 1 -->
             <div class="verse-card">
-                <div class="grid-quote">"For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."</div>
-                <div class="grid-ref">— John 3:16</div>
+                <div>
+                    <div class="grid-quote" id="q1">"For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."</div>
+                    <div class="grid-ref" id="r1">— John 3:16</div>
+                </div>
+                <button class="speak-btn" onclick="speakText('q1', 'r1')">🔊 Listen</button>
             </div>
             <!-- Verse 2 -->
             <div class="verse-card">
-                <div class="grid-quote">"Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge him, and he will make straight your paths."</div>
-                <div class="grid-ref">— Proverbs 3:5-6</div>
+                <div>
+                    <div class="grid-quote" id="q2">"Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge him, and he will make straight your paths."</div>
+                    <div class="grid-ref" id="r2">— Proverbs 3:5-6</div>
+                </div>
+                <button class="speak-btn" onclick="speakText('q2', 'r2')">🔊 Listen</button>
             </div>
             <!-- Verse 3 -->
             <div class="verse-card">
-                <div class="grid-quote">"I can do all things through him who strengthens me."</div>
-                <div class="grid-ref">— Philippians 4:13</div>
+                <div>
+                    <div class="grid-quote" id="q3">"I can do all things through him who strengthens me."</div>
+                    <div class="grid-ref" id="r3">— Philippians 4:13</div>
+                </div>
+                <button class="speak-btn" onclick="speakText('q3', 'r3')">🔊 Listen</button>
             </div>
             <!-- Verse 4 -->
             <div class="verse-card">
-                <div class="grid-quote">"Your word is a lamp to my feet and a light to my path."</div>
-                <div class="grid-ref">— Psalm 119:105</div>
+                <div>
+                    <div class="grid-quote" id="q4">"Your word is a lamp to my feet and a light to my path."</div>
+                    <div class="grid-ref" id="r4">— Psalm 119:105</div>
+                </div>
+                <button class="speak-btn" onclick="speakText('q4', 'r4')">🔊 Listen</button>
             </div>
             <!-- Verse 5 -->
             <div class="verse-card">
-                <div class="grid-quote">"And we know that for those who love God all things work together for good, for those who are called according to his purpose."</div>
-                <div class="grid-ref">— Romans 8:28</div>
+                <div>
+                    <div class="grid-quote" id="q5">"And we know that for those who love God all things work together for good, for those who are called according to his purpose."</div>
+                    <div class="grid-ref" id="r5">— Romans 8:28</div>
+                </div>
+                <button class="speak-btn" onclick="speakText('q5', 'r5')">🔊 Listen</button>
             </div>
             <!-- Verse 6 -->
             <div class="verse-card">
-                <div class="grid-quote">"Be strong and courageous. Do not be frightened, and do not be dismayed, for the Lord your God is with you wherever you go."</div>
-                <div class="grid-ref">— Joshua 1:9</div>
+                <div>
+                    <div class="grid-quote" id="q6">"Be strong and courageous. Do not be frightened, and do not be dismayed, for the Lord your God is with you wherever you go."</div>
+                    <div class="grid-ref" id="r6">— Joshua 1:9</div>
+                </div>
+                <button class="speak-btn" onclick="speakText('q6', 'r6')">🔊 Listen</button>
             </div>
         </div>
 
@@ -304,9 +328,8 @@
         <p>&copy; 2026 <strong>ObeyHim.com</strong>. Walk daily in His light, truth, and grace.</p>
     </footer>
 
-    <!-- JavaScript for Daily Automation -->
+    <!-- JavaScript for Automation and Text-to-Speech -->
     <script>
-        // Array of verses. You can expand this to 365 entries for a full year rotation.
         const dailyVersesDb = [
             { ref: "Psalm 119:105", text: "Your word is a lamp to my feet and a light to my path.", thought: "Let His truth guide your direction in every choice you make today." },
             { ref: "Proverbs 3:5", text: "Trust in the Lord with all your heart and lean not on your own understanding.", thought: "Surrendering your need to control brings true peace." },
@@ -316,7 +339,7 @@
         ];
 
         function loadDailyContent() {
-            // 1. Set Today's Date Header
+            // 1. Set Today's Date Header (Changes automatically every day)
             const now = new Date();
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('current-date').innerText = now.toLocaleDateString('en-US', dateOptions);
@@ -327,17 +350,50 @@
             const oneDay = 1000 * 60 * 60 * 24;
             const dayOfYear = Math.floor(diff / oneDay);
 
-            // 3. Select Verse based on Day of Year (loops automatically if array is shorter than 365)
+            // 3. Select Verse based on Day of Year
             const verseIndex = (dayOfYear - 1) % dailyVersesDb.length;
             const todaysVerse = dailyVersesDb[verseIndex];
 
-            // 4. Inject content into the page
+            // 4. Inject content
             document.getElementById('daily-verse-text').innerText = `“${todaysVerse.text}”`;
             document.getElementById('daily-verse-ref').innerText = `— ${todaysVerse.ref}`;
             document.getElementById('daily-reflection-text').innerText = todaysVerse.thought;
         }
 
-        // Run on page load
+        // Text-to-Speech function for soft, clear voice reading
+        function speakText(textElementId, refElementId) {
+            if (!('speechSynthesis' in window)) {
+                alert("Sorry, your browser does not support text-to-speech audio.");
+                return;
+            }
+
+            // Stop any ongoing speech
+            window.speechSynthesis.cancel();
+
+            const textToRead = document.getElementById(textElementId).innerText;
+            const refToRead = document.getElementById(refElementId).innerText;
+            const utterance = new SpeechSynthesisUtterance(`${textToRead} ${refToRead}`);
+
+            // Configure speech settings for a calm, soft, clear delivery
+            utterance.rate = 0.9; // Slightly slower for peaceful readability
+            utterance.pitch = 0.95; // Natural, grounded tone
+
+            // Attempt to select a clear English voice (prefers male profiles if available on the device)
+            const voices = window.speechSynthesis.getVoices();
+            const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Male') || v.name.includes('David') || v.name.includes('James') || v.name.includes('George')));
+            if (preferredVoice) {
+                utterance.voice = preferredVoice;
+            }
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Preload voices for speech synthesis
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+        }
+
+        // Run automation on page load
         loadDailyContent();
     </script>
 </body>
