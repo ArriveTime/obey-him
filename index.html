@@ -10,10 +10,9 @@
             --accent-gold: #e6bf41;
             --text-dark: #333333;
             --card-bg: rgba(255, 255, 255, 0.95);
-            --sky-blue: #87ceeb;
         }
 
-        /* --- Animated Moving Cloud Background --- */
+        /* --- Guaranteed Blue Sky & Drifting Clouds Background --- */
         body {
             margin: 0;
             padding: 0;
@@ -23,7 +22,8 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: var(--sky-blue);
+            background: linear-gradient(to bottom, #5ba4e5 0%, #87ceeb 60%, #b0e0e6 100%);
+            background-attachment: fixed;
             overflow-x: hidden;
         }
 
@@ -33,12 +33,13 @@
             left: 0;
             width: 200%;
             height: 100%;
-            background-image: url('https://replicate.delivery/xpbkg/D7U86N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7/output.png');
+            /* Embedded scalable cloud pattern so it never fails to load */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='0.4' d='M0,160L48,170.7C96,181,192,203,288,197.3C384,192,480,160,576,138.7C672,117,768,107,864,122.7C960,139,1056,181,1152,186.7C1248,192,1344,160,1392,144L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z'%3E%3C/path%3E%3C/svg%3E"),
+                              url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'%3E%3Cpath fill='%23ffffff' fill-opacity='0.35' d='M300,300q50-70 100-20t100 30q70-40 120 20t40 90q60 20 60 90t-70 80H250q-70-20-60-90t50-80q-20-60 30-90z'/%3E%3C/svg%3E");
             background-repeat: repeat-x;
-            background-size: contain;
+            background-position: 0 20%, 400px 60%;
             z-index: -1;
-            animation: driftClouds 180s linear infinite;
-            opacity: 0.8;
+            animation: driftClouds 120s linear infinite;
         }
 
         @keyframes driftClouds {
@@ -48,7 +49,7 @@
 
         /* --- Header --- */
         .header-bar {
-            background-color: rgba(27, 54, 93, 0.92);
+            background-color: rgba(27, 54, 93, 0.95);
             color: white;
             padding: 18px 30px;
             display: flex;
@@ -203,10 +204,15 @@
             padding: 12px;
             border-radius: 8px;
             border: 2px solid rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.2);
             color: white;
             font-size: 1.1rem;
             font-family: inherit;
+            cursor: pointer;
+        }
+        
+        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
             cursor: pointer;
         }
         
@@ -333,7 +339,7 @@
         <!-- Wake-Up Call / Alarm Section -->
         <section id="set-alarm" class="alarm-section">
             <h2>☀️ Set Your Daily Wake-Up Call</h2>
-            <p>Set your exact date, year, month, and time below, choose your wake-up scripture, and the site will read it to you in a clear male voice.</p>
+            <p>Pick your date and time below, choose your wake-up scripture, and the site will read it to you in a clear male voice.</p>
             
             <div class="alarm-controls">
                 <div class="time-input-group">
@@ -345,7 +351,7 @@
                 <div style="margin-top: 15px;">
                     <label for="alarm-verse-select">Choose Your Wake-Up Scripture:</label><br>
                     <select id="alarm-verse-select">
-                        <!-- Populated dynamically via JS (25 Verses) -->
+                        <!-- Populated dynamically via JS -->
                     </select>
                 </div>
 
@@ -353,7 +359,7 @@
             </div>
         </section>
 
-        <!-- Popular Bible Verses Section (25 Verses) -->
+        <!-- Popular Bible Verses Section -->
         <h2 id="popular-verses" class="section-title">Pillars of Faith: Popular Bible Verses</h2>
 
         <div class="verses-grid">
@@ -414,7 +420,6 @@
 
     <!-- JavaScript Automation, Alarm, and Audio Engine -->
     <script>
-        // 25 Curated Alarm Verses
         const alarmVersesList = [
             { text: "This is the day that the Lord has made; let us rejoice and be glad in it.", ref: "Psalm 118:24" },
             { text: "The steadfast love of the Lord never ceases; his mercies never come to an end; they are new every morning; great is your faithfulness.", ref: "Lamentations 3:22-23" },
@@ -443,7 +448,6 @@
             { text: "Blessed are those who hunger and thirst for righteousness, for they shall be satisfied.", ref: "Matthew 5:6" }
         ];
 
-        // Daily rotating verses
         const dailyVersesDb = [
             { ref: "Psalm 119:105", text: "Your word is a lamp to my feet and a light to my path.", thought: "Let His truth guide your direction in every choice you make today." },
             { ref: "Proverbs 3:5", text: "Trust in the Lord with all your heart and lean not on your own understanding.", thought: "Surrendering your need to control brings true peace." },
@@ -452,7 +456,6 @@
             { ref: "Joshua 1:9", text: "Have I not commanded you? Be strong and courageous. Do not be frightened, and do not be dismayed, for the Lord your God is with you wherever you go.", thought: "Step out in faith knowing the Creator of the universe is by your side." }
         ];
 
-        // Populate Alarm Dropdown
         const selectDropdown = document.getElementById('alarm-verse-select');
         alarmVersesList.forEach((item, index) => {
             const option = document.createElement('option');
@@ -461,7 +464,6 @@
             selectDropdown.appendChild(option);
         });
 
-        // Initialize Daily Content
         function loadDailyContent() {
             const now = new Date();
             const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -479,7 +481,6 @@
             document.getElementById('daily-reflection-text').innerText = todaysVerse.thought;
         }
 
-        // Soft, Clear Male Voice Text-to-Speech Engine (Targeting Daniel, Luke, Paul, David, etc.)
         function speakTextString(text, reference) {
             if (!('speechSynthesis' in window)) {
                 alert("Speech synthesis is not supported on your browser.");
@@ -493,8 +494,6 @@
             utterance.pitch = 0.9;  
 
             const voices = window.speechSynthesis.getVoices();
-            
-            // Explicitly search for preferred male names or standard male system profiles
             const maleVoice = voices.find(v => v.lang.includes('en') && (
                 v.name.includes('Daniel') || 
                 v.name.includes('Luke') || 
@@ -518,7 +517,6 @@
             speakTextString(text, ref);
         }
 
-        // Alarm Logic with Full Date-Time Support
         let alarmActive = false;
         let targetAlarmDateTime = null;
 
@@ -533,9 +531,12 @@
                     alert("Please select a valid date and time for your alarm.");
                     return;
                 }
-                targetAlarmDateTime = new Date(datetimeInput);
-                if (targetAlarmDateTime <= new Date()) {
-                    alert("Please choose a date and time in the future.");
+                
+                // Robust parsing replacement to fix cross-browser datetime-local bugs
+                targetAlarmDateTime = new Date(datetimeInput.replace('T', ' '));
+                
+                if (isNaN(targetAlarmDateTime.getTime()) || targetAlarmDateTime <= new Date()) {
+                    alert("Please choose a future date and time.");
                     return;
                 }
                 
@@ -555,12 +556,10 @@
             }
         }
 
-        // Check alarm every second against full date and time
         setInterval(() => {
             if (!alarmActive || !targetAlarmDateTime) return;
 
             const now = new Date();
-            // Compare down to the minute
             if (now.getFullYear() === targetAlarmDateTime.getFullYear() &&
                 now.getMonth() === targetAlarmDateTime.getMonth() &&
                 now.getDate() === targetAlarmDateTime.getDate() &&
