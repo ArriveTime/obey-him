@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ObeyHim.com - Daily Christian Living & Scripture</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            max-width: 750px;
+            margin: 60px auto;
+            padding: 0 20px;
+            line-height: 1.7;
+            background-color: #f4f6f9;
+            color: #2c3e50;
+        }
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+        h1 {
+            color: #1a365d;
+            margin-top: 0;
+            font-size: 2.2rem;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        .date-banner {
+            font-weight: bold;
+            color: #3182ce;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .verse-box {
+            border-left: 4px solid #3182ce;
+            padding: 15px 20px;
+            margin: 20px 0;
+            background: #f7fafc;
+            border-radius: 0 8px 8px 0;
+        }
+        .verse-text {
+            font-style: italic;
+            font-size: 1.25rem;
+            color: #2d3748;
+            margin-bottom: 10px;
+        }
+        .verse-reference {
+            font-weight: bold;
+            color: #4a5568;
+            text-align: right;
+        }
+        .reflection-area {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        .reflection-area h3 {
+            color: #2b6cb0;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ObeyHim.com</h1>
+        <div class="subtitle">Walking daily in His Word and truth.</div>
+        
+        <div class="date-banner" id="current-date">Loading date...</div>
+        
+        <div class="verse-box">
+            <div class="verse-text" id="verse-content">Loading today's scripture...</div>
+            <div class="verse-reference" id="verse-ref"></div>
+        </div>
+
+        <div class="reflection-area">
+            <h3>Daily Thought & Application</h3>
+            <p id="reflection-text">Connecting to daily reflections...</p>
+        </div>
+    </div>
+
+    <script>
+        // 1. Establish a curated rotation of verses mapped to the day of the year (1 through 366)
+        // This guarantees a reliable, structured daily journey without breaking if an external API goes down.
+        const yearlyVerses = [
+            { ref: "Psalm 119:105", text: "Your word is a lamp to my feet and a light to my path.", thought: "Let His truth guide your direction in every choice you make today." },
+            { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart, and do not lean on your own understanding.", thought: "Release the need to figure everything out on your own strength today." },
+            { ref: "Isaiah 40:31", text: "But they who wait for the Lord shall renew their strength; they shall mount up with wings like eagles.", thought: "Rest in His presence and let Him restore your energy and focus." }
+            // You can scale this list up to 365 items or use a formula to rotate through them smoothly!
+        ];
+
+        function loadDailyContent() {
+            // Display today's human-readable date
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById("current-date").innerText = today.toLocaleDateString('en-US', options);
+
+            // Calculate day of the year (1-365/366) to pick today's verse index automatically
+            const start = new Date(today.getFullYear(), 0, 0);
+            const diff = (today - start) + ((start.getTimezoneOffset() - today.getTimezoneOffset()) * 60 * 1000);
+            const oneDay = 1000 * 60 * 60 * 24;
+            const dayOfYear = Math.floor(diff / oneDay);
+
+            // Match day of year to our array length seamlessly using the modulo operator (%)
+            const index = (dayOfYear - 1) % yearlyVerses.length;
+            const todaysItem = yearlyVerses[index];
+
+            // Render verse and reflection locally
+            document.getElementById("verse-content").innerText = `“${todaysItem.text}”`;
+            document.getElementById("verse-ref").innerText = `— ${todaysItem.ref}`;
+            document.getElementById("reflection-text").innerText = todaysItem.thought;
+
+            // OPTIONAL: If you want to pull live verse text directly from a free API instead of pre-mapping:
+            // fetch('https://bible-api.com/' + encodeURIComponent(todaysItem.ref))
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         document.getElementById("verse-content").innerText = `“${data.text.trim()}”`;
+            //         document.getElementById("verse-ref").innerText = `— ${data.reference}`;
+            //     .catch(err => console.log('Using fallback text'));
+        }
+
+        // Run on page load
+        loadDailyContent();
+    </script>
+
+</body>
+</html>
