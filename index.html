@@ -10,6 +10,7 @@
             --accent-gold: #e6bf41;
             --text-dark: #333333;
             --card-bg: rgba(255, 255, 255, 0.95);
+            --sky-blue: #87ceeb;
         }
 
         /* --- Animated Moving Cloud Background --- */
@@ -22,7 +23,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #87CEEB; /* Bright sky blue fallback */
+            background-color: var(--sky-blue);
             overflow-x: hidden;
         }
 
@@ -30,15 +31,14 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 300%;
+            width: 200%;
             height: 100%;
-            /* Reliable continuous cloud texture pattern */
-            background-image: url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2000&auto=format&fit=crop');
+            background-image: url('https://replicate.delivery/xpbkg/D7U86N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7N3N7/output.png');
             background-repeat: repeat-x;
-            background-size: cover;
+            background-size: contain;
             z-index: -1;
-            opacity: 0.85;
-            animation: driftClouds 90s linear infinite;
+            animation: driftClouds 180s linear infinite;
+            opacity: 0.8;
         }
 
         @keyframes driftClouds {
@@ -66,6 +66,7 @@
             font-weight: 700;
             color: white;
             text-decoration: none;
+            letter-spacing: 0.5px;
         }
 
         .logo span { color: var(--accent-gold); }
@@ -76,6 +77,7 @@
             margin-left: 30px;
             font-size: 1rem;
             font-weight: 500;
+            transition: color 0.3s ease;
         }
         nav a:hover { color: white; }
 
@@ -96,6 +98,7 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             margin-bottom: 40px;
             border: 1px solid rgba(255,255,255,0.9);
+            backdrop-filter: blur(10px);
         }
 
         h1, h2 { color: var(--primary-color); margin-top: 0; letter-spacing: -0.5px; }
@@ -118,6 +121,7 @@
             text-shadow: 0 3px 6px rgba(0,0,0,0.6);
         }
 
+        /* --- Verse Display --- */
         .verse-box {
             border-left: 5px solid var(--accent-gold);
             padding: 25px;
@@ -141,6 +145,7 @@
             font-size: 1.2rem;
         }
 
+        /* --- Buttons --- */
         .control-panel {
             display: flex;
             gap: 15px;
@@ -164,8 +169,9 @@
         }
 
         .action-btn:hover { background-color: #2c4d80; transform: translateY(-2px); }
+        .action-btn:active { transform: translateY(0); }
 
-        /* --- Alarm Section Styling --- */
+        /* --- Alarm Section --- */
         .alarm-section {
             background: linear-gradient(135deg, #1b365d 0%, #2c4d80 100%);
             color: white;
@@ -193,14 +199,15 @@
             flex-wrap: wrap;
         }
 
-        input[type="time"] {
+        input[type="datetime-local"] {
             padding: 12px;
             border-radius: 8px;
             border: 2px solid rgba(255,255,255,0.3);
-            background: transparent;
+            background: rgba(255,255,255,0.1);
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-family: inherit;
+            cursor: pointer;
         }
         
         select#alarm-verse-select {
@@ -283,6 +290,8 @@
             nav a { margin-left: 15px; font-size: 0.9rem;}
             .content-card, .alarm-section { padding: 25px; }
             h1 { font-size: 2.2rem; }
+            .verse-text { font-size: 1.2rem; }
+            .time-input-group { flex-direction: column; align-items: flex-start;}
         }
     </style>
 </head>
@@ -312,7 +321,7 @@
             </div>
 
             <div class="control-panel">
-                <button class="action-btn" onclick="speakTextFromElements('daily-verse-text', 'daily-verse-ref')">🔊 Listen to Today's Verse (Soft Male Voice)</button>
+                <button class="action-btn" onclick="speakTextFromElements('daily-verse-text', 'daily-verse-ref')">🔊 Listen to Today's Verse (Male Voice)</button>
             </div>
 
             <div class="reflection-block" style="margin-top: 30px;">
@@ -322,21 +331,21 @@
         </section>
 
         <!-- Wake-Up Call / Alarm Section -->
-        <section id="set-alarm" class="alarm-section" id="alarm-card-box">
+        <section id="set-alarm" class="alarm-section">
             <h2>☀️ Set Your Daily Wake-Up Call</h2>
-            <p>Set your local time, pick one of 15 inspiring scriptures, and the site will gently read it aloud when the clock hits your target time.</p>
+            <p>Set your exact date, year, month, and time below, choose your wake-up scripture, and the site will read it to you in a clear male voice.</p>
             
             <div class="alarm-controls">
                 <div class="time-input-group">
-                    <label for="alarm-time">Wake-Up Time:</label>
-                    <input type="time" id="alarm-time" value="07:00">
+                    <label for="alarm-datetime">Wake-Up Date & Time:</label>
+                    <input type="datetime-local" id="alarm-datetime">
                     <button id="alarm-toggle-btn" class="action-btn" onclick="toggleAlarm()">Activate Alarm</button>
                 </div>
                 
-                <div>
+                <div style="margin-top: 15px;">
                     <label for="alarm-verse-select">Choose Your Wake-Up Scripture:</label><br>
                     <select id="alarm-verse-select">
-                        <!-- Populated dynamically via JS -->
+                        <!-- Populated dynamically via JS (25 Verses) -->
                     </select>
                 </div>
 
@@ -344,7 +353,7 @@
             </div>
         </section>
 
-        <!-- Popular Bible Verses Section -->
+        <!-- Popular Bible Verses Section (25 Verses) -->
         <h2 id="popular-verses" class="section-title">Pillars of Faith: Popular Bible Verses</h2>
 
         <div class="verses-grid">
@@ -405,7 +414,7 @@
 
     <!-- JavaScript Automation, Alarm, and Audio Engine -->
     <script>
-        // 15 Curated Alarm Verses
+        // 25 Curated Alarm Verses
         const alarmVersesList = [
             { text: "This is the day that the Lord has made; let us rejoice and be glad in it.", ref: "Psalm 118:24" },
             { text: "The steadfast love of the Lord never ceases; his mercies never come to an end; they are new every morning; great is your faithfulness.", ref: "Lamentations 3:22-23" },
@@ -421,7 +430,17 @@
             { text: "The Lord is my shepherd; I shall not want.", ref: "Psalm 23:1" },
             { text: "Seek the Lord and his strength; seek his presence continually!", ref: "1 Chronicles 16:11" },
             { text: "Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you.", ref: "Isaiah 41:10" },
-            { text: "O Lord, in the morning you hear my voice; in the morning I prepare a sacrifice for you and watch.", ref: "Psalm 5:3" }
+            { text: "O Lord, in the morning you hear my voice; in the morning I prepare a sacrifice for you and watch.", ref: "Psalm 5:3" },
+            { text: "The name of the Lord is a strong tower; the righteous man runs into it and is safe.", ref: "Proverbs 18:10" },
+            { text: "Wait for the Lord; be strong, and let your heart take courage; wait for the Lord!", ref: "Psalm 27:14" },
+            { text: "He gives power to the faint, and to him who has no might he increases strength.", ref: "Isaiah 40:29" },
+            { text: "Oh, taste and see that the Lord is good! Blessed is the man who takes refuge in him!", ref: "Psalm 34:8" },
+            { text: "The Lord is good, a stronghold in the day of trouble; he knows those who take refuge in him.", ref: "Nahum 1:7" },
+            { text: "Great is our Lord, and abundant in power; his understanding is beyond measure.", ref: "Psalm 147:5" },
+            { text: "Because of the Lord's great love we are not consumed, for his compassions never fail.", ref: "Lamentations 3:22" },
+            { text: "Direct my steps according to your word, and let no iniquity rule over me.", ref: "Psalm 119:133" },
+            { text: "Draw near to God, and he will draw near to you.", ref: "James 4:8" },
+            { text: "Blessed are those who hunger and thirst for righteousness, for they shall be satisfied.", ref: "Matthew 5:6" }
         ];
 
         // Daily rotating verses
@@ -460,7 +479,7 @@
             document.getElementById('daily-reflection-text').innerText = todaysVerse.thought;
         }
 
-        // Soft, Clear Male Voice Text-to-Speech Engine
+        // Soft, Clear Male Voice Text-to-Speech Engine (Targeting Daniel, Luke, Paul, David, etc.)
         function speakTextString(text, reference) {
             if (!('speechSynthesis' in window)) {
                 alert("Speech synthesis is not supported on your browser.");
@@ -470,13 +489,22 @@
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(`${text} — ${reference}`);
             
-            // Soft and clear voice pacing
             utterance.rate = 0.85; 
             utterance.pitch = 0.9;  
 
             const voices = window.speechSynthesis.getVoices();
-            // Target clean English male voices
-            const maleVoice = voices.find(v => v.lang.includes('en') && (v.name.includes('David') || v.name.includes('Male') || v.name.includes('James') || v.name.includes('George') || v.name.includes('Oliver')));
+            
+            // Explicitly search for preferred male names or standard male system profiles
+            const maleVoice = voices.find(v => v.lang.includes('en') && (
+                v.name.includes('Daniel') || 
+                v.name.includes('Luke') || 
+                v.name.includes('Paul') || 
+                v.name.includes('David') || 
+                v.name.includes('George') || 
+                v.name.includes('Oliver') ||
+                v.name.includes('Male')
+            ));
+            
             if (maleVoice) {
                 utterance.voice = maleVoice;
             }
@@ -490,31 +518,36 @@
             speakTextString(text, ref);
         }
 
-        // Alarm Logic
+        // Alarm Logic with Full Date-Time Support
         let alarmActive = false;
-        let targetAlarmTime = "";
+        let targetAlarmDateTime = null;
 
         function toggleAlarm() {
-            const timeInput = document.getElementById('alarm-time').value;
+            const datetimeInput = document.getElementById('alarm-datetime').value;
             const btn = document.getElementById('alarm-toggle-btn');
             const statusDisplay = document.getElementById('alarm-status');
             const timeDisplay = document.getElementById('alarm-time-display');
 
             if (!alarmActive) {
-                if (!timeInput) {
-                    alert("Please select a valid time for your alarm.");
+                if (!datetimeInput) {
+                    alert("Please select a valid date and time for your alarm.");
                     return;
                 }
-                targetAlarmTime = timeInput;
+                targetAlarmDateTime = new Date(datetimeInput);
+                if (targetAlarmDateTime <= new Date()) {
+                    alert("Please choose a date and time in the future.");
+                    return;
+                }
+                
                 alarmActive = true;
                 btn.innerText = "Deactivate Alarm";
                 btn.style.backgroundColor = "#c53030";
-                timeDisplay.innerText = targetAlarmTime;
+                timeDisplay.innerText = targetAlarmDateTime.toLocaleString();
                 statusDisplay.style.display = "block";
                 statusDisplay.className = "status-display status-active";
             } else {
                 alarmActive = false;
-                targetAlarmTime = "";
+                targetAlarmDateTime = null;
                 btn.innerText = "Activate Alarm";
                 btn.style.backgroundColor = "";
                 statusDisplay.style.display = "none";
@@ -522,28 +555,27 @@
             }
         }
 
-        // Check alarm every second
+        // Check alarm every second against full date and time
         setInterval(() => {
-            if (!alarmActive) return;
+            if (!alarmActive || !targetAlarmDateTime) return;
 
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const currentTimeString = `${hours}:${minutes}`;
-
-            if (currentTimeString === targetAlarmTime) {
-                // Trigger alarm once per minute match
-                alarmActive = false; // Reset to prevent continuous looping during that minute
+            // Compare down to the minute
+            if (now.getFullYear() === targetAlarmDateTime.getFullYear() &&
+                now.getMonth() === targetAlarmDateTime.getMonth() &&
+                now.getDate() === targetAlarmDateTime.getDate() &&
+                now.getHours() === targetAlarmDateTime.getHours() &&
+                now.getMinutes() === targetAlarmDateTime.getMinutes()) {
+                
+                alarmActive = false;
                 document.getElementById('alarm-toggle-btn').innerText = "Activate Alarm";
                 document.getElementById('alarm-toggle-btn').style.backgroundColor = "";
                 document.getElementById('alarm-status').style.display = "none";
                 
-                // Visual Pulse Effect
                 const alarmBox = document.getElementById('set-alarm');
                 alarmBox.classList.add('alarm-triggering');
                 setTimeout(() => alarmBox.classList.remove('alarm-triggering'), 15000);
 
-                // Speak selected alarm verse
                 const selectedIndex = document.getElementById('alarm-verse-select').value;
                 const chosenVerse = alarmVersesList[selectedIndex];
                 speakTextString(chosenVerse.text, chosenVerse.ref);
